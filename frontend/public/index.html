@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VendorHub — AI-Powered Website Builder</title>
+  <meta name="description" content="Build stunning, responsive websites in minutes with AI. No coding. No limits. VendorHub is the AI-powered website builder for small businesses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary:    #5B5EF7;
+      --secondary:  #8B5CF6;
+      --accent:     #06B6D4;
+      --bg:         #F7F8FC;
+      --dark:       #111827;
+      --mid:        #374151;
+      --light:      #6B7280;
+      --card-bg:    rgba(255,255,255,0.7);
+      --border:     rgba(91,94,247,0.12);
+      --shadow-sm:  0 2px 12px rgba(91,94,247,0.08);
+      --shadow-md:  0 8px 32px rgba(91,94,247,0.14);
+      --shadow-lg:  0 24px 64px rgba(91,94,247,0.18);
+      --radius-sm:  10px;
+      --radius-md:  18px;
+      --radius-lg:  28px;
+      --radius-xl:  40px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; font-family: inherit; }
+
+    /* ============================================================
+       UTILITIES
+    ============================================================ */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(91,94,247,0.08); border: 1px solid rgba(91,94,247,0.18);
+      border-radius: 50px; padding: 6px 16px;
+      font-size: 13px; font-weight: 600; color: var(--primary);
+      backdrop-filter: blur(8px);
+    }
+    .section-badge .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--primary); display: block;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.3); }
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; border-radius: 50px; padding: 13px 28px;
+      font-weight: 600; font-size: 15px; border: none;
+      box-shadow: 0 4px 20px rgba(91,94,247,0.35);
+      transition: all 0.28s cubic-bezier(.4,0,.2,1);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(91,94,247,0.45);
+    }
+    .btn-outline {
+      background: transparent; color: var(--dark);
+      border: 1.5px solid rgba(17,24,39,0.15);
+      border-radius: 50px; padding: 12px 26px;
+      font-weight: 600; font-size: 15px;
+      transition: all 0.28s ease;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-outline:hover {
+      border-color: var(--primary); color: var(--primary);
+      background: rgba(91,94,247,0.04);
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: var(--shadow-md);
+      border-radius: var(--radius-lg);
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 24px;
+      transition: all 0.35s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(247,248,252,0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(91,94,247,0.1);
+      box-shadow: 0 2px 24px rgba(17,24,39,0.07);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; gap: 0;
+      height: 70px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px; font-weight: 800;
+      color: var(--dark); flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; fill: #fff; }
+    .nav-menu {
+      display: flex; align-items: center; gap: 4px;
+      margin-left: 40px; flex: 1;
+    }
+    .nav-menu a {
+      padding: 8px 14px; border-radius: 8px;
+      font-size: 14px; font-weight: 500; color: var(--mid);
+      transition: all 0.2s;
+    }
+    .nav-menu a:hover { color: var(--primary); background: rgba(91,94,247,0.06); }
+    .nav-actions {
+      display: flex; align-items: center; gap: 10px; margin-left: auto;
+    }
+    .nav-icon-btn {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: transparent; border: 1.5px solid rgba(17,24,39,0.12);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; color: var(--mid);
+    }
+    .nav-icon-btn:hover { border-color: var(--primary); color: var(--primary); background: rgba(91,94,247,0.05); }
+    .nav-login {
+      padding: 8px 18px; border-radius: 50px;
+      font-size: 14px; font-weight: 600; color: var(--mid);
+      background: transparent; border: none;
+      transition: color 0.2s;
+    }
+    .nav-login:hover { color: var(--primary); }
+    .nav-get-started {
+      padding: 9px 22px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; font-size: 14px; font-weight: 600;
+      border: none; box-shadow: 0 4px 16px rgba(91,94,247,0.3);
+      transition: all 0.28s ease;
+    }
+    .nav-get-started:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(91,94,247,0.42); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--dark); border-radius: 2px; transition: all 0.3s;
+    }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    #hero {
+      min-height: 100vh;
+      padding: 100px 0 80px;
+      background: linear-gradient(160deg, #F7F8FC 0%, #EEF0FF 40%, #F3E8FF 70%, #E0F7FA 100%);
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(91,94,247,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute; bottom: -200px; left: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: grid; grid-template-columns: 1fr 1.05fr;
+      gap: 64px; align-items: center;
+    }
+    .hero-left { position: relative; z-index: 2; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, rgba(91,94,247,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(91,94,247,0.22);
+      border-radius: 50px; padding: 6px 16px 6px 8px;
+      font-size: 12.5px; font-weight: 600; color: var(--primary);
+      margin-bottom: 28px; backdrop-filter: blur(8px);
+    }
+    .hero-badge .badge-icon {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50px; padding: 3px 10px;
+      color: #fff; font-size: 11px; font-weight: 700;
+    }
+    .hero-headline {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(42px, 5.5vw, 68px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -2px;
+      color: var(--dark);
+      margin-bottom: 22px;
+    }
+    .hero-subtitle {
+      font-size: 18px; color: var(--light);
+      line-height: 1.65; margin-bottom: 36px;
+      max-width: 460px;
+    }
+    .hero-cta {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 36px; flex-wrap: wrap;
+    }
+    .hero-cta .btn-primary { font-size: 16px; padding: 15px 32px; }
+    .hero-watch {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--mid); font-weight: 600; font-size: 15px;
+      transition: color 0.2s;
+    }
+    .hero-watch:hover { color: var(--primary); }
+    .watch-btn {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: rgba(91,94,247,0.1); border: 1.5px solid rgba(91,94,247,0.22);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s;
+    }
+    .hero-watch:hover .watch-btn { background: var(--primary); border-color: var(--primary); }
+    .watch-btn svg { fill: var(--primary); transition: fill 0.25s; }
+    .hero-watch:hover .watch-btn svg { fill: #fff; }
+    .hero-micro-badges {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .micro-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.8); border: 1px solid rgba(17,24,39,0.09);
+      border-radius: 50px; padding: 6px 14px;
+      font-size: 12.5px; font-weight: 500; color: var(--mid);
+      backdrop-filter: blur(8px);
+    }
+    .micro-badge svg { color: #10B981; }
+
+    /* HERO RIGHT — BUILDER MOCKUP */
+    .hero-right { position: relative; z-index: 2; }
+    .builder-mockup {
+      position: relative;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 24px;
+      box-shadow: 0 30px 80px rgba(91,94,247,0.2), 0 0 0 1px rgba(91,94,247,0.07);
+      overflow: visible;
+      padding: 0;
+    }
+    .builder-topbar {
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid rgba(17,24,39,0.07);
+      padding: 12px 16px;
+      display: flex; align-items: center; gap: 12px;
+      border-radius: 24px 24px 0 0;
+    }
+    .topbar-dots { display: flex; gap: 6px; }
+    .topbar-dots span {
+      width: 11px; height: 11px; border-radius: 50%;
+    }
+    .topbar-dots span:nth-child(1) { background: #FF5F57; }
+    .topbar-dots span:nth-child(2) { background: #FEBC2E; }
+    .topbar-dots span:nth-child(3) { background: #28C840; }
+    .topbar-url {
+      flex: 1; background: rgba(17,24,39,0.05); border-radius: 8px;
+      padding: 5px 12px; font-size: 12px; color: var(--light);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .topbar-device-btns {
+      display: flex; gap: 4px;
+    }
+    .topbar-device-btns button {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: rgba(91,94,247,0.08); color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; border: none;
+      transition: all 0.2s;
+    }
+    .topbar-device-btns button.active,
+    .topbar-device-btns button:hover {
+      background: var(--primary); color: #fff;
+    }
+    .builder-body {
+      display: flex; position: relative;
+      height: 420px; border-radius: 0 0 24px 24px; overflow: hidden;
+    }
+
+    /* Left Sidebar */
+    .builder-sidebar {
+      width: 62px; background: rgba(255,255,255,0.98);
+      border-right: 1px solid rgba(17,24,39,0.06);
+      display: flex; flex-direction: column;
+      align-items: center; gap: 4px; padding: 10px 0;
+      flex-shrink: 0;
+    }
+    .sidebar-item {
+      width: 46px; height: 46px; border-radius: 10px;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 3px;
+      cursor: pointer; transition: all 0.2s;
+      color: var(--light); font-size: 9px; font-weight: 500;
+    }
+    .sidebar-item svg { width: 18px; height: 18px; }
+    .sidebar-item:hover, .sidebar-item.active {
+      background: rgba(91,94,247,0.08); color: var(--primary);
+    }
+    .sidebar-divider { width: 32px; height: 1px; background: rgba(17,24,39,0.08); margin: 4px 0; }
+
+    /* Canvas */
+    .builder-canvas {
+      flex: 1; background: #F9FAFB;
+      overflow: hidden; position: relative;
+    }
+    .canvas-website {
+      height: 100%; overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .canvas-website::-webkit-scrollbar { width: 4px; }
+    .canvas-website::-webkit-scrollbar-thumb { background: rgba(91,94,247,0.25); border-radius: 4px; }
+
+    /* Mini website inside builder */
+    .mini-site-nav {
+      background: #1a1a2e; padding: 10px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .mini-site-logo { color: #a8a3f7; font-size: 11px; font-weight: 700; font-family: 'Outfit', sans-serif; }
+    .mini-site-nav-links { display: flex; gap: 10px; }
+    .mini-site-nav-links span { color: rgba(255,255,255,0.5); font-size: 8px; }
+    .mini-site-hero {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      padding: 28px 16px 20px;
+      text-align: center;
+    }
+    .mini-site-hero h3 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 6px; font-family: 'Outfit', sans-serif; }
+    .mini-site-hero p { color: rgba(255,255,255,0.6); font-size: 9px; margin-bottom: 12px; }
+    .mini-site-cta-btn {
+      background: linear-gradient(135deg, #a8a3f7, #7c3aed);
+      color: #fff; border: none; border-radius: 20px; padding: 6px 16px;
+      font-size: 9px; font-weight: 600; cursor: pointer;
+    }
+    .mini-site-products {
+      background: #fff; padding: 14px 12px;
+    }
+    .mini-site-products h4 { font-size: 10px; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
+    .mini-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .mini-product-card {
+      border-radius: 8px; overflow: hidden;
+      background: #F9FAFB; border: 1px solid rgba(17,24,39,0.06);
+    }
+    .mini-product-img { height: 48px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .mini-product-info { padding: 5px; }
+    .mini-product-name { font-size: 8px; font-weight: 600; color: var(--dark); }
+    .mini-product-price { font-size: 8px; color: var(--primary); font-weight: 600; }
+
+    /* Floating Toolbar Left */
+    .floating-toolbar {
+      position: absolute; left: -140px; top: 40px;
+      width: 130px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.95);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(17,24,39,0.12);
+      padding: 12px 10px;
+      z-index: 10;
+      animation: floatLeft 3s ease-in-out infinite;
+    }
+    @keyframes floatLeft {
+      0%,100% { transform: translateY(0px); }
+      50%      { transform: translateY(-6px); }
+    }
+    .ft-title { font-size: 10px; font-weight: 700; color: var(--mid); margin-bottom: 8px; padding: 0 4px; }
+    .ft-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 8px; border-radius: 8px; cursor: pointer;
+      transition: background 0.18s; font-size: 11px; color: var(--mid); font-weight: 500;
+    }
+    .ft-item:hover { background: rgba(91,94,247,0.07); color: var(--primary); }
+    .ft-icon {
+      width: 22px; height: 22px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
+    }
+
+    /* Floating AI Panel Right */
+    .floating-ai-panel {
+      position: absolute; right: -175px; top: 20px;
+      width: 165px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(91,94,247,0.15);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(91,94,247,0.15);
+      padding: 14px 12px;
+      z-index: 10;
+      animation: floatRight 3.5s ease-in-out infinite;
+    }
+    @keyframes floatRight {
+      0%,100% { transform: translateY(0px); }
+      50%      { transform: translateY(-8px); }
+    }
+    .ai-panel-header {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+    }
+    .ai-avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .ai-panel-header h4 { font-size: 11px; font-weight: 700; color: var(--dark); }
+    .ai-panel-header p { font-size: 9.5px; color: var(--light); }
+    .ai-message {
+      background: rgba(91,94,247,0.07); border-radius: 10px; padding: 8px 10px;
+      font-size: 9.5px; color: var(--mid); line-height: 1.5; margin-bottom: 8px;
+    }
+    .ai-suggestions { display: flex; flex-direction: column; gap: 4px; }
+    .ai-suggestion-btn {
+      background: rgba(255,255,255,0.9); border: 1px solid rgba(91,94,247,0.15);
+      border-radius: 8px; padding: 5px 9px;
+      font-size: 9px; font-weight: 500; color: var(--primary);
+      cursor: pointer; text-align: left; transition: all 0.2s;
+    }
+    .ai-suggestion-btn:hover { background: rgba(91,94,247,0.08); border-color: var(--primary); }
+
+    /* ============================================================
+       LOGO STRIP / TRUST SECTION
+    ============================================================ */
+    #trust-strip {
+      padding: 28px 0;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(17,24,39,0.06);
+      border-bottom: 1px solid rgba(17,24,39,0.06);
+    }
+    .trust-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .trust-label { font-size: 13px; color: var(--light); font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+    .trust-logos { display: flex; gap: 32px; align-items: center; overflow: hidden; }
+    .trust-logo { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; color: rgba(17,24,39,0.22); white-space: nowrap; }
+
+    /* ============================================================
+       TEMPLATES SECTION
+    ============================================================ */
+    #templates {
+      padding: 96px 0;
+      background: #F7F8FC;
+    }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800; letter-spacing: -1.5px;
+      color: var(--dark); margin: 16px 0 14px;
+    }
+    .section-header p { font-size: 17px; color: var(--light); max-width: 500px; margin: 0 auto; }
+
+    .template-filters {
+      display: flex; gap: 8px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 36px;
+    }
+    .filter-btn {
+      padding: 8px 18px; border-radius: 50px;
+      font-size: 13.5px; font-weight: 500; color: var(--mid);
+      background: rgba(255,255,255,0.8); border: 1.5px solid rgba(17,24,39,0.1);
+      cursor: pointer; transition: all 0.22s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary); color: #fff; border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(91,94,247,0.3);
+    }
+
+    .templates-scroll {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 22px;
+    }
+    .template-card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(17,24,39,0.07);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(17,24,39,0.06);
+      transition: all 0.32s cubic-bezier(.4,0,.2,1);
+      cursor: pointer;
+    }
+    .template-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 48px rgba(91,94,247,0.18);
+      border-color: rgba(91,94,247,0.2);
+    }
+    .template-preview {
+      height: 180px; position: relative; overflow: hidden;
+    }
+    .template-preview-inner {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      transition: transform 0.4s ease;
+    }
+    .template-card:hover .template-preview-inner { transform: scale(1.04); }
+    .t-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px; font-size: 8px; font-weight: 600;
+    }
+    .t-hero {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 6px; padding: 10px;
+    }
+    .t-hero h4 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 14px; text-align: center; }
+    .t-hero p { font-size: 8px; text-align: center; opacity: 0.7; }
+    .t-hero-btn {
+      padding: 5px 14px; border-radius: 20px; font-size: 8px;
+      font-weight: 600; border: none; cursor: pointer;
+    }
+    .template-hover-overlay {
+      position: absolute; inset: 0;
+      background: rgba(91,94,247,0.88);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+      backdrop-filter: blur(4px);
+    }
+    .template-card:hover .template-hover-overlay { opacity: 1; }
+    .preview-overlay-btn {
+      background: #fff; color: var(--primary);
+      border: none; border-radius: 50px;
+      padding: 10px 22px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .preview-overlay-btn:hover { transform: scale(1.05); }
+    .template-info { padding: 14px 16px; }
+    .template-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--dark); }
+    .template-meta { display: flex; align-items: center; justify-content: space-between; }
+    .template-category {
+      font-size: 11.5px; color: var(--primary); font-weight: 500;
+      background: rgba(91,94,247,0.08); padding: 2px 10px; border-radius: 50px;
+    }
+    .template-stars { font-size: 10.5px; color: #F59E0B; }
+
+    /* ============================================================
+       FEATURES SECTION
+    ============================================================ */
+    #features {
+      padding: 96px 0;
+      background: linear-gradient(160deg, #EEF0FF 0%, #F3E8FF 50%, #E0F7FA 100%);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px; margin-top: 0;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(91,94,247,0.08);
+      transition: all 0.32s cubic-bezier(.4,0,.2,1);
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(91,94,247,0.16);
+      border-color: rgba(91,94,247,0.2);
+    }
+    .feature-icon-wrap {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 18px;
+    }
+    .feature-card h3 { font-size: 17px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+    .feature-card p { font-size: 14px; color: var(--light); line-height: 1.6; }
+
+    /* ============================================================
+       AI SHOWCASE SECTION
+    ============================================================ */
+    #ai-showcase {
+      padding: 112px 24px;
+      background: #0D0E1A;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #ai-showcase::before {
+      content: '';
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse, rgba(91,94,247,0.18) 0%, rgba(139,92,246,0.08) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .ai-showcase-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(91,94,247,0.15); border: 1px solid rgba(91,94,247,0.3);
+      border-radius: 50px; padding: 6px 16px;
+      font-size: 12.5px; font-weight: 600; color: #a8a3f7;
+      margin-bottom: 32px;
+    }
+    .ai-showcase-headline {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(28px, 4vw, 54px);
+      font-weight: 800; letter-spacing: -1.5px;
+      line-height: 1.12;
+      max-width: 820px; margin: 0 auto 48px;
+    }
+    .ai-showcase-headline .grad {
+      background: linear-gradient(135deg, #a8a3f7 0%, #c084fc 50%, #67e8f9 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .ai-showcase-headline .white { color: rgba(255,255,255,0.88); }
+
+    .ai-bubble-container {
+      display: flex; justify-content: center; align-items: flex-end;
+      gap: 20px; flex-wrap: wrap; margin-top: 48px;
+    }
+    .ai-bubble {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px; padding: 20px 24px;
+      text-align: left; max-width: 220px;
+      transition: all 0.3s;
+    }
+    .ai-bubble:hover { border-color: rgba(91,94,247,0.4); transform: translateY(-4px); }
+    .ai-bubble .icon { font-size: 24px; margin-bottom: 10px; }
+    .ai-bubble h4 { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 6px; }
+    .ai-bubble p { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+    .ai-center-bubble {
+      background: rgba(91,94,247,0.15);
+      border-color: rgba(91,94,247,0.35);
+      transform: scale(1.06);
+    }
+
+    /* ============================================================
+       MARKETING TOOLS SECTION
+    ============================================================ */
+    #marketing {
+      padding: 96px 0;
+      background: #F7F8FC;
+    }
+    .marketing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px; margin-top: 0;
+    }
+    .marketing-card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(17,24,39,0.07);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(17,24,39,0.06);
+      transition: all 0.32s ease;
+      cursor: pointer;
+    }
+    .marketing-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(91,94,247,0.14); }
+    .marketing-card.wide { grid-column: 1 / -1; }
+    .marketing-card-top {
+      padding: 28px 28px 0;
+    }
+    .marketing-card-top .mcard-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 14px;
+    }
+    .marketing-card-top h3 { font-size: 19px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .marketing-card-top p { font-size: 14px; color: var(--light); margin-bottom: 16px; line-height: 1.6; }
+    .marketing-card-visual {
+      padding: 20px 24px 24px;
+    }
+
+    /* Instagram-style post mockup */
+    .ig-mockup {
+      background: linear-gradient(135deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+      border-radius: 16px; padding: 20px; color: #fff;
+    }
+    .ig-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .ig-avatar { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .ig-username { font-size: 13px; font-weight: 600; }
+    .ig-post-area {
+      background: rgba(255,255,255,0.12); border-radius: 10px; height: 80px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin-bottom: 10px;
+    }
+    .ig-caption { font-size: 11px; opacity: 0.8; line-height: 1.5; }
+    .ig-stats { display: flex; gap: 14px; margin-top: 10px; font-size: 11px; opacity: 0.7; }
+
+    /* Email mockup */
+    .email-mockup {
+      background: #fff; border-radius: 14px;
+      border: 1px solid rgba(17,24,39,0.07);
+      overflow: hidden;
+    }
+    .email-header-bar {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      padding: 14px 18px; color: #fff;
+    }
+    .email-header-bar h4 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .email-header-bar p { font-size: 10px; opacity: 0.7; }
+    .email-body { padding: 14px 18px; }
+    .email-body p { font-size: 11px; color: var(--mid); line-height: 1.6; margin-bottom: 12px; }
+    .email-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; border: none; border-radius: 20px;
+      padding: 8px 18px; font-size: 10px; font-weight: 600; cursor: pointer;
+    }
+
+    /* SEO card */
+    .seo-mockup { background: #fff; border-radius: 14px; border: 1px solid rgba(17,24,39,0.07); padding: 16px; }
+    .seo-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .seo-bar h4 { font-size: 13px; font-weight: 700; color: var(--dark); }
+    .seo-score { font-size: 24px; font-weight: 800; color: #10B981; }
+    .seo-items { display: flex; flex-direction: column; gap: 8px; }
+    .seo-item { display: flex; align-items: center; gap: 10px; }
+    .seo-label { font-size: 11px; color: var(--light); flex: 1; }
+    .seo-progress-track { flex: 2; background: rgba(17,24,39,0.07); border-radius: 4px; height: 6px; }
+    .seo-progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+
+    /* Analytics mockup */
+    .analytics-mockup {
+      background: #0D0E1A; border-radius: 14px; padding: 16px; color: #fff;
+    }
+    .analytics-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .analytics-header h4 { font-size: 13px; font-weight: 700; }
+    .analytics-range { font-size: 10px; color: rgba(255,255,255,0.4); }
+    .analytics-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+    .astat { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 10px; }
+    .astat-val { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+    .astat-label { font-size: 9px; color: rgba(255,255,255,0.4); }
+    .astat-up { color: #10B981; font-size: 9px; }
+    .chart-bars { display: flex; align-items: flex-end; gap: 4px; height: 60px; }
+    .chart-bar {
+      flex: 1; border-radius: 4px 4px 0 0;
+      background: rgba(91,94,247,0.4);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .chart-bar:hover, .chart-bar.active { background: var(--primary); }
+
+    /* ============================================================
+       BUILDER PREVIEW SECTION (full width)
+    ============================================================ */
+    #builder-preview {
+      padding: 80px 0;
+      background: linear-gradient(160deg, #EEF0FF 0%, #F3E8FF 100%);
+    }
+    .builder-full-wrap {
+      max-width: 1100px; margin: 0 auto 0; padding: 0 24px;
+    }
+    .builder-controls {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(16px);
+      border: 1px solid rgba(17,24,39,0.08); border-radius: 16px;
+      padding: 10px 16px; margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(17,24,39,0.06);
+    }
+    .builder-controls-left { display: flex; align-items: center; gap: 12px; }
+    .bc-brand { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700; color: var(--dark); }
+    .bc-divider { width: 1px; height: 20px; background: rgba(17,24,39,0.1); }
+    .bc-publish-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; border: none; border-radius: 8px;
+      padding: 7px 16px; font-size: 12px; font-weight: 600; cursor: pointer;
+    }
+    .device-switcher { display: flex; gap: 4px; }
+    .device-btn {
+      width: 32px; height: 32px; border-radius: 8px;
+      border: 1.5px solid rgba(17,24,39,0.1);
+      background: transparent; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; color: var(--light); font-size: 13px;
+    }
+    .device-btn.active, .device-btn:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .builder-preview-frame {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(17,24,39,0.07);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 16px 48px rgba(91,94,247,0.14);
+      position: relative;
+    }
+    .builder-preview-inner {
+      display: flex; height: 460px;
+    }
+    .bp-left-panel {
+      width: 220px; background: rgba(255,255,255,0.98);
+      border-right: 1px solid rgba(17,24,39,0.07);
+      padding: 16px; flex-shrink: 0; overflow-y: auto;
+    }
+    .bp-panel-title { font-size: 11px; font-weight: 700; color: var(--light); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.8px; }
+    .bp-element {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px; border-radius: 10px;
+      cursor: pointer; transition: background 0.2s; margin-bottom: 4px;
+    }
+    .bp-element:hover { background: rgba(91,94,247,0.07); }
+    .bp-element-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .bp-element-label { font-size: 12.5px; font-weight: 500; color: var(--mid); }
+    .bp-main-canvas { flex: 1; background: #F9FAFB; position: relative; overflow: hidden; }
+    .bp-section-overlay {
+      position: absolute; left: 20px; right: 20px;
+      border: 2px dashed rgba(91,94,247,0.3);
+      border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; gap: 8px;
+      color: rgba(91,94,247,0.5); font-size: 11px; font-weight: 600;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .bp-section-overlay:hover { border-color: var(--primary); color: var(--primary); background: rgba(91,94,247,0.03); }
+    .bp-website-preview {
+      height: 100%; overflow-y: auto;
+    }
+    .bp-right-panel {
+      width: 220px; background: rgba(255,255,255,0.98);
+      border-left: 1px solid rgba(17,24,39,0.07);
+      padding: 16px; flex-shrink: 0;
+    }
+    .bp-prop-group { margin-bottom: 18px; }
+    .bp-prop-label { font-size: 10.5px; font-weight: 700; color: var(--light); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+    .bp-prop-input {
+      width: 100%; background: rgba(17,24,39,0.04);
+      border: 1px solid rgba(17,24,39,0.1);
+      border-radius: 8px; padding: 7px 10px;
+      font-size: 12px; color: var(--dark); font-family: inherit;
+    }
+    .bp-color-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .bp-color-swatch {
+      width: 22px; height: 22px; border-radius: 6px; cursor: pointer;
+      transition: transform 0.2s; border: 2px solid transparent;
+    }
+    .bp-color-swatch:hover, .bp-color-swatch.active { transform: scale(1.2); border-color: var(--primary); }
+
+    /* ============================================================
+       TESTIMONIALS
+    ============================================================ */
+    #testimonials { padding: 96px 0; background: #F7F8FC; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(17,24,39,0.07);
+      border-radius: 22px; padding: 28px;
+      box-shadow: 0 4px 16px rgba(17,24,39,0.06);
+      transition: all 0.32s ease;
+    }
+    .testimonial-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(91,94,247,0.14); }
+    .t-stars { color: #F59E0B; font-size: 14px; margin-bottom: 14px; letter-spacing: 1px; }
+    .t-quote { font-size: 15px; color: var(--mid); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .t-author { display: flex; align-items: center; gap: 12px; }
+    .t-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .t-name { font-size: 14px; font-weight: 700; color: var(--dark); }
+    .t-role { font-size: 12px; color: var(--light); }
+
+    /* ============================================================
+       PRICING SECTION
+    ============================================================ */
+    #pricing {
+      padding: 96px 0;
+      background: linear-gradient(160deg, #EEF0FF 0%, #F3E8FF 50%, #E0F7FA 100%);
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      max-width: 960px; margin: 0 auto;
+    }
+    .pricing-card {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(17,24,39,0.09);
+      border-radius: 24px; padding: 36px 28px;
+      box-shadow: 0 4px 20px rgba(91,94,247,0.07);
+      transition: all 0.32s ease; position: relative;
+    }
+    .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(91,94,247,0.16); }
+    .pricing-card.popular {
+      background: linear-gradient(135deg, rgba(91,94,247,0.06), rgba(139,92,246,0.05));
+      border-color: rgba(91,94,247,0.3);
+      box-shadow: 0 8px 32px rgba(91,94,247,0.18);
+    }
+    .popular-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; font-size: 11px; font-weight: 700;
+      padding: 5px 18px; border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(91,94,247,0.4);
+      white-space: nowrap;
+    }
+    .pricing-plan { font-size: 14px; font-weight: 600; color: var(--light); margin-bottom: 8px; }
+    .pricing-price {
+      display: flex; align-items: flex-end; gap: 4px;
+      margin-bottom: 6px;
+    }
+    .price-amount { font-family: 'Outfit', sans-serif; font-size: 44px; font-weight: 800; color: var(--dark); line-height: 1; }
+    .price-period { font-size: 14px; color: var(--light); margin-bottom: 8px; }
+    .pricing-desc { font-size: 13.5px; color: var(--light); margin-bottom: 24px; line-height: 1.5; }
+    .pricing-features { display: flex; flex-direction: column; gap: 11px; margin-bottom: 28px; }
+    .pricing-feature {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13.5px; color: var(--mid);
+    }
+    .feat-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(16,185,129,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: #10B981; font-size: 11px; flex-shrink: 0; font-weight: 700;
+    }
+    .pricing-cta {
+      width: 100%; padding: 13px; border-radius: 50px;
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: all 0.28s ease;
+    }
+    .pricing-cta.outline {
+      background: transparent; color: var(--primary);
+      border: 2px solid rgba(91,94,247,0.3);
+    }
+    .pricing-cta.outline:hover {
+      background: rgba(91,94,247,0.06); border-color: var(--primary);
+    }
+    .pricing-cta.filled {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; border: none;
+      box-shadow: 0 4px 16px rgba(91,94,247,0.35);
+    }
+    .pricing-cta.filled:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(91,94,247,0.45); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #footer {
+      background: #0D0E1A;
+      padding: 64px 0 32px;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand {}
+    .footer-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 800;
+      color: #fff; margin-bottom: 14px;
+    }
+    .footer-logo .logo-icon { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+    .footer-desc { font-size: 13.5px; line-height: 1.7; max-width: 260px; margin-bottom: 20px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; cursor: pointer; transition: all 0.2s; color: rgba(255,255,255,0.7);
+    }
+    .social-icon:hover { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.8px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: 13.5px; color: rgba(255,255,255,0.5); transition: color 0.2s; }
+    .footer-col ul li a:hover { color: #a8a3f7; }
+    .footer-newsletter { margin-top: 12px; }
+    .newsletter-input-wrap { display: flex; gap: 8px; }
+    .newsletter-input {
+      flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px; padding: 10px 14px;
+      font-size: 13px; color: #fff; font-family: inherit;
+    }
+    .newsletter-input::placeholder { color: rgba(255,255,255,0.3); }
+    .newsletter-input:focus { outline: none; border-color: var(--primary); }
+    .newsletter-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; border: none; border-radius: 10px;
+      padding: 10px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .newsletter-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(91,94,247,0.4); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 13px; }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a { font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+    .footer-bottom-links a:hover { color: #a8a3f7; }
+
+    /* ============================================================
+       SMOOTH SCROLL FADE-IN (Intersection Observer)
+    ============================================================ */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1100px) {
+      .floating-toolbar { display: none; }
+      .floating-ai-panel { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .marketing-grid { grid-template-columns: 1fr; }
+      .marketing-card.wide { grid-column: auto; }
+    }
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-right { max-width: 560px; margin: 0 auto; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+    }
+    @media (max-width: 700px) {
+      .nav-menu { display: none; }
+      .hamburger { display: flex; }
+      .hero-headline { letter-spacing: -1.5px; }
+      .hero-cta { flex-direction: column; align-items: flex-start; }
+      .builder-body { height: 300px; }
+      .builder-preview-inner { height: 320px; }
+      .bp-left-panel, .bp-right-panel { display: none; }
+      .templates-scroll { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .trust-inner { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+
+    /* ============================================================
+       CTA BAND
+    ============================================================ */
+    #cta-band {
+      padding: 80px 24px;
+      background: linear-gradient(135deg, #5B5EF7 0%, #8B5CF6 60%, #06B6D4 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #cta-band::before {
+      content: '';
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-band-inner { position: relative; z-index: 1; }
+    .cta-band-inner h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800; color: #fff;
+      letter-spacing: -1.5px; margin-bottom: 16px;
+    }
+    .cta-band-inner p { font-size: 17px; color: rgba(255,255,255,0.8); margin-bottom: 32px; }
+    .cta-band-inner .btn-white {
+      background: #fff; color: var(--primary);
+      border: none; border-radius: 50px;
+      padding: 16px 36px; font-size: 16px; font-weight: 700;
+      cursor: pointer; transition: all 0.28s;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .cta-band-inner .btn-white:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 36px rgba(0,0,0,0.25); }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        VendorHub
+      </a>
+      <nav class="nav-menu">
+        <a href="#">Product</a>
+        <a href="#templates">Templates</a>
+        <a href="#features">Solutions</a>
+        <a href="#">Resources</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#">Enterprise</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="nav-icon-btn" id="lang-btn" title="Language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"/></svg>
+        </button>
+        <button class="nav-login">Login</button>
+        <button class="nav-get-started">Get Started →</button>
+      </div>
+      <button class="hamburger" id="hamburger-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO SECTION
+  ============================================================ -->
+  <section id="hero">
+    <div class="hero-inner">
+      <!-- LEFT -->
+      <div class="hero-left">
+        <div class="hero-badge reveal">
+          <span class="badge-icon">✨ NEW</span>
+          AI-Powered Website Builder
+        </div>
+        <h1 class="hero-headline reveal reveal-delay-1">
+          Create your dream<br/>
+          <span class="gradient-text">website with AI</span>
+        </h1>
+        <p class="hero-subtitle reveal reveal-delay-2">
+          Build stunning, responsive websites in minutes. No coding. No limits. Just your business, online and thriving.
+        </p>
+        <div class="hero-cta reveal reveal-delay-2">
+          <button class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Start Building for Free
+          </button>
+          <a href="#" class="hero-watch">
+            <span class="watch-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </span>
+            Watch how it works
+          </a>
+        </div>
+        <div class="hero-micro-badges reveal reveal-delay-3">
+          <span class="micro-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            No credit card required
+          </span>
+          <span class="micro-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Free forever plan
+          </span>
+          <span class="micro-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            AI website generation
+          </span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Builder Mockup -->
+      <div class="hero-right reveal reveal-delay-2">
+        <!-- Floating Left Toolbar -->
+        <div class="floating-toolbar">
+          <div class="ft-title">Add Elements</div>
+          <div class="ft-item"><div class="ft-icon" style="background:rgba(91,94,247,0.1);">⬛</div> Section</div>
+          <div class="ft-item"><div class="ft-icon" style="background:rgba(6,182,212,0.1);">T</div> Text</div>
+          <div class="ft-item"><div class="ft-icon" style="background:rgba(16,185,129,0.1);">🖼️</div> Image</div>
+          <div class="ft-item"><div class="ft-icon" style="background:rgba(245,158,11,0.1);">🔘</div> Button</div>
+          <div class="ft-item"><div class="ft-icon" style="background:rgba(239,68,68,0.1);">🖼️</div> Gallery</div>
+          <div class="ft-item"><div class="ft-icon" style="background:rgba(139,92,246,0.1);">▶️</div> Video</div>
+          <div class="ft-item"><div class="ft-icon" style="background:rgba(236,72,153,0.1);">📋</div> Form</div>
+        </div>
+
+        <div class="builder-mockup">
+          <!-- Top bar -->
+          <div class="builder-topbar">
+            <div class="topbar-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="topbar-url">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              vendorhub.app/my-store
+            </div>
+            <div class="topbar-device-btns">
+              <button class="active" title="Desktop">🖥</button>
+              <button title="Tablet">📱</button>
+              <button title="Mobile">📲</button>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div class="builder-body">
+            <!-- Sidebar Icons -->
+            <div class="builder-sidebar">
+              <div class="sidebar-item active" title="Elements">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              </div>
+              <div class="sidebar-item" title="Pages">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <div class="sidebar-divider"></div>
+              <div class="sidebar-item" title="Design">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+              </div>
+              <div class="sidebar-item" title="Media">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <div class="sidebar-item" title="AI">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 012 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 017 7h1a1 1 0 010 2h-1v1a2 2 0 01-2 2H5a2 2 0 01-2-2v-1H2a1 1 0 010-2h1a7 7 0 017-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 012-2z"/></svg>
+              </div>
+            </div>
+
+            <!-- Canvas with mini website -->
+            <div class="builder-canvas">
+              <div class="canvas-website">
+                <div class="mini-site-nav">
+                  <span class="mini-site-logo">🌿 GreenLeaf</span>
+                  <div class="mini-site-nav-links">
+                    <span>Shop</span><span>About</span><span>Contact</span>
+                  </div>
+                </div>
+                <div class="mini-site-hero">
+                  <h3>Bring Nature Home 🌿</h3>
+                  <p>Premium indoor plants delivered to your door</p>
+                  <button class="mini-site-cta-btn">Shop Collection</button>
+                </div>
+                <div class="mini-site-products">
+                  <h4>Featured Plants</h4>
+                  <div class="mini-product-grid">
+                    <div class="mini-product-card">
+                      <div class="mini-product-img">🌱</div>
+                      <div class="mini-product-info">
+                        <div class="mini-product-name">Monstera</div>
+                        <div class="mini-product-price">₹499</div>
+                      </div>
+                    </div>
+                    <div class="mini-product-card">
+                      <div class="mini-product-img">🌺</div>
+                      <div class="mini-product-info">
+                        <div class="mini-product-name">Peace Lily</div>
+                        <div class="mini-product-price">₹349</div>
+                      </div>
+                    </div>
+                    <div class="mini-product-card">
+                      <div class="mini-product-img">🎋</div>
+                      <div class="mini-product-info">
+                        <div class="mini-product-name">Bamboo</div>
+                        <div class="mini-product-price">₹299</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating AI Panel -->
+        <div class="floating-ai-panel">
+          <div class="ai-panel-header">
+            <div class="ai-avatar">🤖</div>
+            <div>
+              <h4>Hi! I'm Aria 👋</h4>
+              <p>Your AI web designer</p>
+            </div>
+          </div>
+          <div class="ai-message">How can I help you build your website today?</div>
+          <div class="ai-suggestions">
+            <button class="ai-suggestion-btn">✨ Create a hero section</button>
+            <button class="ai-suggestion-btn">✍️ Write store content</button>
+            <button class="ai-suggestion-btn">🎨 Suggest color palette</button>
+            <button class="ai-suggestion-btn">📬 Add a contact form</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TRUST STRIP
+  ============================================================ -->
+  <div id="trust-strip">
+    <div class="trust-inner">
+      <span class="trust-label">Trusted by 10,000+ businesses</span>
+      <div class="trust-logos">
+        <span class="trust-logo">Shopify</span>
+        <span class="trust-logo">Razorpay</span>
+        <span class="trust-logo">Stripe</span>
+        <span class="trust-logo">Cloudinary</span>
+        <span class="trust-logo">OpenAI</span>
+        <span class="trust-logo">MongoDB</span>
+        <span class="trust-logo">Vercel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       TEMPLATES SECTION
+  ============================================================ -->
+  <section id="templates">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge"><span class="dot"></span> 20+ Beautiful Templates</span>
+        <h2>Choose a template <span class="gradient-text">you love</span></h2>
+        <p>Pick from 20+ professional templates designed for every business type and industry.</p>
+      </div>
+      <div class="template-filters reveal">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Business</button>
+        <button class="filter-btn">Store</button>
+        <button class="filter-btn">Food</button>
+        <button class="filter-btn">Beauty</button>
+        <button class="filter-btn">Portfolio</button>
+        <button class="filter-btn">Healthcare</button>
+        <button class="filter-btn">Education</button>
+        <button class="filter-btn">More +</button>
+      </div>
+
+      <div class="templates-scroll">
+        <!-- Plant Store -->
+        <div class="template-card reveal">
+          <div class="template-preview">
+            <div class="template-preview-inner" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
+              <div class="t-nav" style="background: rgba(0,0,0,0.3); color: #a8e6cf;">🌿 GreenLeaf <span style="font-size:7px;color:rgba(255,255,255,0.4)">Shop | About | ☰</span></div>
+              <div class="t-hero" style="color:#fff">
+                <h4 style="font-size:13px; color:#a8e6cf;">🌿 Bring Nature Home</h4>
+                <p style="color:rgba(255,255,255,0.6); font-size:8px;">Premium indoor plants</p>
+                <button class="t-hero-btn" style="background:#a8e6cf; color:#0f2027;">Shop Now</button>
+              </div>
+            </div>
+            <div class="template-hover-overlay">
+              <button class="preview-overlay-btn">Preview Template</button>
+            </div>
+          </div>
+          <div class="template-info">
+            <h3>Plant Store</h3>
+            <div class="template-meta">
+              <span class="template-category">Store</span>
+              <span class="template-stars">★★★★★</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fashion Boutique -->
+        <div class="template-card reveal reveal-delay-1">
+          <div class="template-preview">
+            <div class="template-preview-inner" style="background: linear-gradient(135deg, #1a1a1a, #333);">
+              <div class="t-nav" style="background: #000; color: #e9c46a;">👗 MODE <span style="font-size:7px;color:rgba(255,255,255,0.3)">Collections | Look | ☰</span></div>
+              <div class="t-hero" style="color:#fff">
+                <h4 style="font-size:12px; color:#e9c46a; letter-spacing:2px;">AUTUMN '25</h4>
+                <p style="color:rgba(255,255,255,0.5); font-size:7px; letter-spacing:1px;">FASHION BOUTIQUE</p>
+                <button class="t-hero-btn" style="background:#e9c46a; color:#000; letter-spacing:1px;">DISCOVER</button>
+              </div>
+            </div>
+            <div class="template-hover-overlay">
+              <button class="preview-overlay-btn">Preview Template</button>
+            </div>
+          </div>
+          <div class="template-info">
+            <h3>Fashion Boutique</h3>
+            <div class="template-meta">
+              <span class="template-category">Store</span>
+              <span class="template-stars">★★★★★</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Café Delight -->
+        <div class="template-card reveal reveal-delay-2">
+          <div class="template-preview">
+            <div class="template-preview-inner" style="background: linear-gradient(135deg, #6B3226, #A0522D);">
+              <div class="t-nav" style="background:rgba(0,0,0,0.4); color: #F4A460;">☕ Café Delight</div>
+              <div class="t-hero" style="color:#fff">
+                <h4 style="font-size:14px;">☕ Brewed to Perfection</h4>
+                <p style="color:rgba(255,255,255,0.6); font-size:8px;">Fresh • Organic • Artisanal</p>
+                <button class="t-hero-btn" style="background:#F4A460; color:#6B3226;">Order Now</button>
+              </div>
+            </div>
+            <div class="template-hover-overlay">
+              <button class="preview-overlay-btn">Preview Template</button>
+            </div>
+          </div>
+          <div class="template-info">
+            <h3>Café Delight</h3>
+            <div class="template-meta">
+              <span class="template-category">Food</span>
+              <span class="template-stars">★★★★☆</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Creative Agency -->
+        <div class="template-card reveal reveal-delay-3">
+          <div class="template-preview">
+            <div class="template-preview-inner" style="background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);">
+              <div class="t-nav" style="background:rgba(255,255,255,0.05); color:#a8a3f7;">⚡ NEXUS</div>
+              <div class="t-hero" style="color:#fff">
+                <h4 style="font-size:12px; letter-spacing:1px;">WE BUILD<br/><span style="color:#a8a3f7;">THE FUTURE</span></h4>
+                <button class="t-hero-btn" style="background:linear-gradient(135deg,#5B5EF7,#8B5CF6); color:#fff; margin-top:4px;">Get a Quote</button>
+              </div>
+            </div>
+            <div class="template-hover-overlay">
+              <button class="preview-overlay-btn">Preview Template</button>
+            </div>
+          </div>
+          <div class="template-info">
+            <h3>Creative Agency</h3>
+            <div class="template-meta">
+              <span class="template-category">Business</span>
+              <span class="template-stars">★★★★★</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jewelry Store -->
+        <div class="template-card reveal">
+          <div class="template-preview">
+            <div class="template-preview-inner" style="background: linear-gradient(135deg, #1a0533, #2d1b69);">
+              <div class="t-nav" style="background:rgba(0,0,0,0.3); color:#DDA0DD;">💎 LUMIÈRE</div>
+              <div class="t-hero" style="color:#fff">
+                <h4 style="font-size:12px; color:#DDA0DD; letter-spacing:2px;">FINE JEWELRY</h4>
+                <p style="font-size:8px; color:rgba(255,255,255,0.5);">Crafted for Eternity</p>
+                <button class="t-hero-btn" style="background:#DDA0DD; color:#1a0533;">Explore</button>
+              </div>
+            </div>
+            <div class="template-hover-overlay">
+              <button class="preview-overlay-btn">Preview Template</button>
+            </div>
+          </div>
+          <div class="template-info">
+            <h3>Jewelry Store</h3>
+            <div class="template-meta">
+              <span class="template-category">Store</span>
+              <span class="template-stars">★★★★★</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real Estate -->
+        <div class="template-card reveal reveal-delay-1">
+          <div class="template-preview">
+            <div class="template-preview-inner" style="background: linear-gradient(135deg, #1a3c5e, #2E8B57);">
+              <div class="t-nav" style="background:rgba(0,0,0,0.3); color:#87CEEB;">🏠 Horizon Realty</div>
+              <div class="t-hero" style="color:#fff">
+                <h4 style="font-size:11px;">Find Your Dream Home</h4>
+                <p style="font-size:8px; color:rgba(255,255,255,0.6);">500+ Premium Properties</p>
+                <button class="t-hero-btn" style="background:#87CEEB; color:#1a3c5e;">Search Now</button>
+              </div>
+            </div>
+            <div class="template-hover-overlay">
+              <button class="preview-overlay-btn">Preview Template</button>
+            </div>
+          </div>
+          <div class="template-info">
+            <h3>Real Estate</h3>
+            <div class="template-meta">
+              <span class="template-category">Business</span>
+              <span class="template-stars">★★★★☆</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fitness Studio -->
+        <div class="template-card reveal reveal-delay-2">
+          <div class="template-preview">
+            <div class="template-preview-inner" style="background: linear-gradient(135deg, #000, #1a0000);">
+              <div class="t-nav" style="background:rgba(255,0,0,0.15); color:#ff6b6b;">💪 IRON FORGE</div>
+              <div class="t-hero" style="color:#fff">
+                <h4 style="font-size:13px; letter-spacing:1px;">TRAIN <span style="color:#ff6b6b;">HARDER</span></h4>
+                <p style="font-size:8px; color:rgba(255,255,255,0.5);">Elite Fitness Studio</p>
+                <button class="t-hero-btn" style="background:#ff6b6b; color:#000;">Join Now</button>
+              </div>
+            </div>
+            <div class="template-hover-overlay">
+              <button class="preview-overlay-btn">Preview Template</button>
+            </div>
+          </div>
+          <div class="template-info">
+            <h3>Fitness Studio</h3>
+            <div class="template-meta">
+              <span class="template-category">Healthcare</span>
+              <span class="template-stars">★★★★★</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photography Portfolio -->
+        <div class="template-card reveal reveal-delay-3">
+          <div class="template-preview">
+            <div class="template-preview-inner" style="background: #1a1a1a;">
+              <div class="t-nav" style="background:rgba(255,255,255,0.05); color:#fff; font-style:italic;">Alex Chen</div>
+              <div class="t-hero" style="color:#fff">
+                <h4 style="font-size:11px; font-weight:300; letter-spacing:3px; text-transform:uppercase;">Photography</h4>
+                <p style="font-size:8px; color:rgba(255,255,255,0.4); letter-spacing:2px;">CAPTURING MOMENTS</p>
+                <button class="t-hero-btn" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.4);">View Portfolio</button>
+              </div>
+            </div>
+            <div class="template-hover-overlay">
+              <button class="preview-overlay-btn">Preview Template</button>
+            </div>
+          </div>
+          <div class="template-info">
+            <h3>Photography Portfolio</h3>
+            <div class="template-meta">
+              <span class="template-category">Portfolio</span>
+              <span class="template-stars">★★★★★</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURES SECTION
+  ============================================================ -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge"><span class="dot"></span> Powerful Features</span>
+        <h2>Everything you need to <span class="gradient-text">succeed online</span></h2>
+        <p>From AI generation to e-commerce, VendorHub has every tool to grow your business.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap" style="background: linear-gradient(135deg, rgba(91,94,247,0.15), rgba(139,92,246,0.15));">🤖</div>
+          <h3>AI Website Builder</h3>
+          <p>Describe your business in a sentence and watch Aria build your entire website—layout, content, and design included.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon-wrap" style="background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(56,189,248,0.15));">🖱️</div>
+          <h3>Drag & Drop Editor</h3>
+          <p>Visually compose every page with pixel-perfect precision. Rearrange sections and elements with ease—no code needed.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon-wrap" style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(52,211,153,0.15));">📱</div>
+          <h3>Mobile Responsive</h3>
+          <p>Every template and element is fully responsive out of the box. Preview and fine-tune across desktop, tablet, and mobile.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon-wrap" style="background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(251,191,36,0.15));">🛒</div>
+          <h3>E-Commerce Ready</h3>
+          <p>Built-in product catalog, cart, Razorpay/Stripe payments, and order management. Launch your store in minutes.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap" style="background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(248,113,113,0.15));">📈</div>
+          <h3>SEO Optimized</h3>
+          <p>Automatic meta tags, sitemap generation, structured data, and page speed optimization to rank higher on Google.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon-wrap" style="background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(196,181,253,0.15));">💬</div>
+          <h3>24/7 AI Support</h3>
+          <p>Get instant help from Aria anytime. From design tips to content ideas—your personal AI expert is always on call.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       AI SHOWCASE SECTION
+  ============================================================ -->
+  <section id="ai-showcase">
+    <div style="max-width:1100px; margin: 0 auto; position:relative; z-index:1;">
+      <div class="ai-showcase-badge reveal">✨ Meet Aria, Your AI Assistant</div>
+      <h2 class="ai-showcase-headline reveal">
+        <span class="grad">Prompt, ask, bounce ideas.</span>
+        <span class="white"><br/>We can do it all together. I'm your<br/>personal web design &amp; business expert.</span>
+      </h2>
+
+      <div class="ai-bubble-container reveal">
+        <div class="ai-bubble">
+          <div class="icon">🎨</div>
+          <h4>Design Genius</h4>
+          <p>Generate beautiful layouts instantly with a single prompt.</p>
+        </div>
+        <div class="ai-bubble ai-center-bubble">
+          <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;">🤖</div>
+          <h4 style="text-align:center; font-size:16px;">Aria</h4>
+          <p style="text-align:center; color:rgba(255,255,255,0.5); font-size:12px;">AI Web Designer<br/>Always online</p>
+        </div>
+        <div class="ai-bubble">
+          <div class="icon">✍️</div>
+          <h4>Content Writer</h4>
+          <p>Create compelling copy for every page in seconds.</p>
+        </div>
+        <div class="ai-bubble">
+          <div class="icon">📊</div>
+          <h4>Analytics Expert</h4>
+          <p>Get smart insights and actionable recommendations.</p>
+        </div>
+        <div class="ai-bubble">
+          <div class="icon">🛒</div>
+          <h4>E-Commerce Pro</h4>
+          <p>Optimize products, pricing and conversions with AI.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MARKETING TOOLS SECTION
+  ============================================================ -->
+  <section id="marketing">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge"><span class="dot"></span> Marketing Suite</span>
+        <h2>Market your site from <span class="gradient-text">launch to scale</span></h2>
+        <p>All the tools you need to attract customers, retain them, and grow revenue.</p>
+      </div>
+
+      <div class="marketing-grid">
+        <!-- Social Media -->
+        <div class="marketing-card reveal">
+          <div class="marketing-card-top">
+            <div class="mcard-icon" style="background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(239,68,68,0.1));">📸</div>
+            <h3>Social Media Marketing</h3>
+            <p>Create and schedule Instagram, Facebook & Twitter posts with AI-generated captions and visuals.</p>
+          </div>
+          <div class="marketing-card-visual">
+            <div class="ig-mockup">
+              <div class="ig-header">
+                <div class="ig-avatar">🌿</div>
+                <div>
+                  <div class="ig-username">greenleaf.store</div>
+                  <div style="font-size:10px;opacity:0.6">Sponsored</div>
+                </div>
+              </div>
+              <div class="ig-post-area">🌿</div>
+              <div class="ig-caption">🌱 Transform your space with our premium indoor plants! Shop now and get 20% off your first order. Link in bio! 🛍️ #IndoorPlants #GreenLiving</div>
+              <div class="ig-stats">
+                <span>❤️ 1,204</span>
+                <span>💬 48</span>
+                <span>📤 Share</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email Generator -->
+        <div class="marketing-card reveal reveal-delay-1">
+          <div class="marketing-card-top">
+            <div class="mcard-icon" style="background:linear-gradient(135deg,rgba(91,94,247,0.1),rgba(139,92,246,0.1));">✉️</div>
+            <h3>AI Email Generator</h3>
+            <p>Craft personalized email campaigns with AI—from subject lines to full newsletters, in seconds.</p>
+          </div>
+          <div class="marketing-card-visual">
+            <div class="email-mockup">
+              <div class="email-header-bar">
+                <h4>🌿 Your Plants Are Waiting!</h4>
+                <p>Special offer just for you, Kavit</p>
+              </div>
+              <div class="email-body">
+                <p>Hi Kavit 👋,<br/>You browsed our Monstera collection last week. We saved one just for you — and added a <strong>20% discount</strong>. Don't miss it!</p>
+                <button class="email-btn">Claim My Discount →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEO Tools -->
+        <div class="marketing-card reveal">
+          <div class="marketing-card-top">
+            <div class="mcard-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(52,211,153,0.1));">🔍</div>
+            <h3>SEO Tools</h3>
+            <p>Rank higher on Google with AI-powered keyword suggestions, meta tag optimization, and performance insights.</p>
+          </div>
+          <div class="marketing-card-visual">
+            <div class="seo-mockup">
+              <div class="seo-bar">
+                <h4>SEO Score</h4>
+                <span class="seo-score">92</span>
+              </div>
+              <div class="seo-items">
+                <div class="seo-item">
+                  <span class="seo-label">Meta Tags</span>
+                  <div class="seo-progress-track"><div class="seo-progress-fill" style="width:95%"></div></div>
+                  <span style="font-size:10px;color:#10B981;font-weight:600">95%</span>
+                </div>
+                <div class="seo-item">
+                  <span class="seo-label">Page Speed</span>
+                  <div class="seo-progress-track"><div class="seo-progress-fill" style="width:88%"></div></div>
+                  <span style="font-size:10px;color:#10B981;font-weight:600">88%</span>
+                </div>
+                <div class="seo-item">
+                  <span class="seo-label">Mobile SEO</span>
+                  <div class="seo-progress-track"><div class="seo-progress-fill" style="width:100%"></div></div>
+                  <span style="font-size:10px;color:#10B981;font-weight:600">100%</span>
+                </div>
+                <div class="seo-item">
+                  <span class="seo-label">Backlinks</span>
+                  <div class="seo-progress-track"><div class="seo-progress-fill" style="width:72%; background: linear-gradient(90deg,#F59E0B,#FBBF24)"></div></div>
+                  <span style="font-size:10px;color:#F59E0B;font-weight:600">72%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="marketing-card reveal reveal-delay-1">
+          <div class="marketing-card-top">
+            <div class="mcard-icon" style="background:linear-gradient(135deg,rgba(6,182,212,0.1),rgba(56,189,248,0.1));">📊</div>
+            <h3>Campaign Analytics</h3>
+            <p>Track every visitor, conversion, and sale. Understand your audience and make smarter marketing decisions.</p>
+          </div>
+          <div class="marketing-card-visual">
+            <div class="analytics-mockup">
+              <div class="analytics-header">
+                <h4>Store Analytics</h4>
+                <span class="analytics-range">Last 30 days</span>
+              </div>
+              <div class="analytics-stats">
+                <div class="astat">
+                  <div class="astat-val">12.4K</div>
+                  <div class="astat-label">Visitors</div>
+                  <div class="astat-up">↑ 24%</div>
+                </div>
+                <div class="astat">
+                  <div class="astat-val" style="color:#a8a3f7;">₹84K</div>
+                  <div class="astat-label">Revenue</div>
+                  <div class="astat-up">↑ 18%</div>
+                </div>
+                <div class="astat">
+                  <div class="astat-val" style="color:#67e8f9;">3.2%</div>
+                  <div class="astat-label">Conversion</div>
+                  <div class="astat-up">↑ 5%</div>
+                </div>
+              </div>
+              <div class="chart-bars">
+                <div class="chart-bar" style="height:40%"></div>
+                <div class="chart-bar" style="height:55%"></div>
+                <div class="chart-bar" style="height:35%"></div>
+                <div class="chart-bar" style="height:70%"></div>
+                <div class="chart-bar" style="height:60%"></div>
+                <div class="chart-bar active" style="height:85%"></div>
+                <div class="chart-bar" style="height:75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BUILDER PREVIEW SECTION
+  ============================================================ -->
+  <section id="builder-preview">
+    <div class="builder-full-wrap">
+      <div class="section-header reveal" style="margin-bottom:32px;">
+        <span class="section-badge"><span class="dot"></span> Visual Builder</span>
+        <h2>Edit everything <span class="gradient-text">visually</span></h2>
+        <p>A powerful, intuitive editor. No learning curve. Just click, drag, and build.</p>
+      </div>
+
+      <div class="builder-controls reveal">
+        <div class="builder-controls-left">
+          <span class="bc-brand">🌿 GreenLeaf Store</span>
+          <div class="bc-divider"></div>
+          <span style="font-size:12px; color:var(--light);">Home · Shop · About · Contact</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="device-switcher">
+            <button class="device-btn active" title="Desktop">🖥</button>
+            <button class="device-btn" title="Tablet">📱</button>
+            <button class="device-btn" title="Mobile">📲</button>
+          </div>
+          <button class="bc-publish-btn">🚀 Publish</button>
+        </div>
+      </div>
+
+      <div class="builder-preview-frame reveal">
+        <div class="builder-preview-inner">
+          <!-- Left Panel: Elements -->
+          <div class="bp-left-panel">
+            <div class="bp-panel-title">Elements</div>
+            <div class="bp-element">
+              <div class="bp-element-icon" style="background:rgba(91,94,247,0.1);">⬛</div>
+              <span class="bp-element-label">Section</span>
+            </div>
+            <div class="bp-element" style="background:rgba(91,94,247,0.07);">
+              <div class="bp-element-icon" style="background:rgba(91,94,247,0.15);">T</div>
+              <span class="bp-element-label" style="color:var(--primary);font-weight:600;">Text Block</span>
+            </div>
+            <div class="bp-element">
+              <div class="bp-element-icon" style="background:rgba(6,182,212,0.1);">🖼️</div>
+              <span class="bp-element-label">Image</span>
+            </div>
+            <div class="bp-element">
+              <div class="bp-element-icon" style="background:rgba(245,158,11,0.1);">🔘</div>
+              <span class="bp-element-label">Button</span>
+            </div>
+            <div class="bp-element">
+              <div class="bp-element-icon" style="background:rgba(16,185,129,0.1);">🏷️</div>
+              <span class="bp-element-label">Product Card</span>
+            </div>
+            <div class="bp-element">
+              <div class="bp-element-icon" style="background:rgba(239,68,68,0.1);">📋</div>
+              <span class="bp-element-label">Form</span>
+            </div>
+            <div class="bp-element">
+              <div class="bp-element-icon" style="background:rgba(139,92,246,0.1);">▶️</div>
+              <span class="bp-element-label">Video</span>
+            </div>
+            <div class="bp-element">
+              <div class="bp-element-icon" style="background:rgba(236,72,153,0.1);">🗺️</div>
+              <span class="bp-element-label">Map</span>
+            </div>
+          </div>
+
+          <!-- Main Canvas -->
+          <div class="bp-main-canvas">
+            <!-- Dashed overlay showing selected section -->
+            <div class="bp-section-overlay" style="top:10px;height:56px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              Navbar selected
+            </div>
+            <div class="bp-website-preview">
+              <div style="padding-top:76px;">
+                <div style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364); padding:32px 20px; text-align:center; color:#fff;">
+                  <p style="font-size:11px; color:#a8e6cf; margin-bottom:6px; letter-spacing:1px;">🌿 FREE SHIPPING OVER ₹999</p>
+                  <h2 style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:800; margin-bottom:8px;">Bring Nature Home</h2>
+                  <p style="font-size:12px; color:rgba(255,255,255,0.65); margin-bottom:14px;">Premium indoor plants for every space</p>
+                  <button style="background:#a8e6cf; color:#0f2027; border:none; border-radius:20px; padding:8px 20px; font-size:12px; font-weight:700; cursor:pointer;">Shop Now →</button>
+                </div>
+                <div style="background:#fff; padding:20px;">
+                  <p style="font-size:11px; font-weight:700; color:var(--dark); margin-bottom:12px;">Featured Collection</p>
+                  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+                    <div style="border-radius:10px; background:#F9FAFB; border:1px solid rgba(17,24,39,0.06); padding:10px; text-align:center;">
+                      <div style="font-size:24px; margin-bottom:6px;">🌱</div>
+                      <p style="font-size:10px; font-weight:600; color:var(--dark);">Monstera</p>
+                      <p style="font-size:10px; color:var(--primary); font-weight:700;">₹499</p>
+                    </div>
+                    <div style="border-radius:10px; background:#F9FAFB; border:1px solid rgba(17,24,39,0.06); padding:10px; text-align:center;">
+                      <div style="font-size:24px; margin-bottom:6px;">🌺</div>
+                      <p style="font-size:10px; font-weight:600; color:var(--dark);">Peace Lily</p>
+                      <p style="font-size:10px; color:var(--primary); font-weight:700;">₹349</p>
+                    </div>
+                    <div style="border-radius:10px; background:#F9FAFB; border:1px solid rgba(17,24,39,0.06); padding:10px; text-align:center;">
+                      <div style="font-size:24px; margin-bottom:6px;">🎍</div>
+                      <p style="font-size:10px; font-weight:600; color:var(--dark);">Bamboo</p>
+                      <p style="font-size:10px; color:var(--primary); font-weight:700;">₹299</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Panel: Properties -->
+          <div class="bp-right-panel">
+            <div class="bp-panel-title">Properties</div>
+            <div class="bp-prop-group">
+              <div class="bp-prop-label">Font Size</div>
+              <input class="bp-prop-input" type="text" value="22px" />
+            </div>
+            <div class="bp-prop-group">
+              <div class="bp-prop-label">Font Weight</div>
+              <input class="bp-prop-input" type="text" value="800 (Black)" />
+            </div>
+            <div class="bp-prop-group">
+              <div class="bp-prop-label">Color</div>
+              <div class="bp-color-row">
+                <div class="bp-color-swatch active" style="background:#5B5EF7;"></div>
+                <div class="bp-color-swatch" style="background:#8B5CF6;"></div>
+                <div class="bp-color-swatch" style="background:#06B6D4;"></div>
+                <div class="bp-color-swatch" style="background:#10B981;"></div>
+                <div class="bp-color-swatch" style="background:#F59E0B;"></div>
+                <div class="bp-color-swatch" style="background:#EF4444;"></div>
+                <div class="bp-color-swatch" style="background:#111827;"></div>
+                <div class="bp-color-swatch" style="background:#fff; border:1px solid #e5e7eb;"></div>
+              </div>
+            </div>
+            <div class="bp-prop-group">
+              <div class="bp-prop-label">Padding</div>
+              <input class="bp-prop-input" type="text" value="32px 20px" />
+            </div>
+            <div class="bp-prop-group">
+              <div class="bp-prop-label">Border Radius</div>
+              <input class="bp-prop-input" type="text" value="0px" />
+            </div>
+            <div style="margin-top:16px;">
+              <button style="width:100%; padding:10px; background:linear-gradient(135deg,var(--primary),var(--secondary)); color:#fff; border:none; border-radius:10px; font-size:13px; font-weight:600; cursor:pointer;">Apply Changes ✓</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TESTIMONIALS
+  ============================================================ -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge"><span class="dot"></span> Customer Stories</span>
+        <h2>Loved by <span class="gradient-text">10,000+ businesses</span></h2>
+        <p>From bakeries to boutiques—see what real entrepreneurs say about VendorHub.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"VendorHub helped me launch my plant store in just one afternoon. The AI suggested layouts I never would've thought of, and customers keep complimenting the design!"</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#a8e6cf,#2c5364);">🌿</div>
+            <div>
+              <div class="t-name">Priya Sharma</div>
+              <div class="t-role">Founder, GreenLeaf Store · Mumbai</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"I switched from Shopify to VendorHub and saved ₹12,000/month. The AI email campaigns alone have doubled my repeat purchases. Absolutely game-changing."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#e9c46a,#1a1a1a);">👗</div>
+            <div>
+              <div class="t-name">Rahul Mehra</div>
+              <div class="t-role">Owner, MODE Fashion Boutique · Delhi</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"As a café owner with zero tech knowledge, I was scared to go online. VendorHub's AI built my entire website and set up online ordering in under 2 hours!"</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#F4A460,#6B3226);">☕</div>
+            <div>
+              <div class="t-name">Sunita Kapoor</div>
+              <div class="t-role">Founder, Café Delight · Bengaluru</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"The SEO tools are incredible. My jewelry store went from page 5 to page 1 on Google in 6 weeks. Revenue is up 340% since switching to VendorHub."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#DDA0DD,#2d1b69);">💎</div>
+            <div>
+              <div class="t-name">Ananya Iyer</div>
+              <div class="t-role">Founder, LUMIÈRE Jewelry · Chennai</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"Our agency now builds client websites 5x faster using VendorHub. The AI generates first drafts in minutes that previously took us days. ROI has been incredible."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#a8a3f7,#0f0c29);">⚡</div>
+            <div>
+              <div class="t-name">Vikram Nair</div>
+              <div class="t-role">CEO, NEXUS Digital Agency · Pune</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-quote">"The analytics dashboard is a dream. I finally understand my customers, which products convert best, and when to run sales. My fitness studio grew 80% in 3 months."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background:linear-gradient(135deg,#ff6b6b,#000);">💪</div>
+            <div>
+              <div class="t-name">Arjun Reddy</div>
+              <div class="t-role">Owner, Iron Forge Gym · Hyderabad</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PRICING SECTION
+  ============================================================ -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-badge"><span class="dot"></span> Simple Pricing</span>
+        <h2>Start free, <span class="gradient-text">scale forever</span></h2>
+        <p>No hidden fees. Cancel anytime. Every plan includes our core AI features.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Starter -->
+        <div class="pricing-card reveal">
+          <div class="pricing-plan">Starter</div>
+          <div class="pricing-price">
+            <span class="price-amount">₹0</span>
+            <span class="price-period">/month</span>
+          </div>
+          <p class="pricing-desc">Perfect for individuals getting started with their first online presence.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="feat-check">✓</span> 1 Website</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> AI Website Builder</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> 5 Pages</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> VendorHub subdomain</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> 500MB Storage</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> SSL Certificate</li>
+          </ul>
+          <button class="pricing-cta outline">Get Started Free →</button>
+        </div>
+
+        <!-- Professional -->
+        <div class="pricing-card popular reveal reveal-delay-1">
+          <div class="popular-badge">⚡ Most Popular</div>
+          <div class="pricing-plan">Professional</div>
+          <div class="pricing-price">
+            <span class="price-amount">₹999</span>
+            <span class="price-period">/month</span>
+          </div>
+          <p class="pricing-desc">For growing businesses that need more power and customization.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="feat-check">✓</span> 5 Websites</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Unlimited Pages</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Custom Domain</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> E-Commerce (Razorpay)</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> AI Content Writer</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Analytics Dashboard</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Email Marketing</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Priority Support</li>
+          </ul>
+          <button class="pricing-cta filled">Start Pro Trial →</button>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="pricing-card reveal reveal-delay-2">
+          <div class="pricing-plan">Enterprise</div>
+          <div class="pricing-price">
+            <span class="price-amount">₹4999</span>
+            <span class="price-period">/month</span>
+          </div>
+          <p class="pricing-desc">For agencies and large businesses with advanced needs and SLA requirements.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="feat-check">✓</span> Unlimited Websites</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> White Label Solution</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> API Access</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Custom AI Training</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Dedicated Account Manager</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> 99.9% SLA Uptime</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Team Collaboration</li>
+            <li class="pricing-feature"><span class="feat-check">✓</span> Advanced Analytics</li>
+          </ul>
+          <button class="pricing-cta outline">Contact Sales →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CTA BAND
+  ============================================================ -->
+  <section id="cta-band">
+    <div class="cta-band-inner reveal">
+      <h2>Your website is one prompt away ✨</h2>
+      <p>Join 10,000+ businesses already building with VendorHub's AI</p>
+      <button class="btn-white">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Start Building for Free
+      </button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="logo-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            VendorHub
+          </div>
+          <p class="footer-desc">The AI-powered multi-tenant website builder for small businesses. Build fast, grow faster.</p>
+          <div class="footer-socials">
+            <div class="social-icon" title="Twitter">𝕏</div>
+            <div class="social-icon" title="Instagram">📷</div>
+            <div class="social-icon" title="LinkedIn">in</div>
+            <div class="social-icon" title="YouTube">▶</div>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#">Website Builder</a></li>
+            <li><a href="#">AI Assistant</a></li>
+            <li><a href="#">Templates</a></li>
+            <li><a href="#">E-Commerce</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Pricing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press Kit</a></li>
+            <li><a href="#">Partners</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Newsletter</h4>
+          <p style="font-size:13px; line-height:1.7; margin-bottom:14px;">Get product updates, growth tips, and special offers — weekly.</p>
+          <div class="footer-newsletter">
+            <div class="newsletter-input-wrap">
+              <input class="newsletter-input" type="email" placeholder="your@email.com" />
+              <button class="newsletter-btn">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 VendorHub Technologies Pvt Ltd. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Intersection Observer for reveal animations
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Template filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Device switcher in topbar
+    document.querySelectorAll('.topbar-device-btns button').forEach((btn, i, btns) => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Device switcher in builder preview
+    document.querySelectorAll('.device-btn').forEach((btn, i, btns) => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Color swatch selection in builder right panel
+    document.querySelectorAll('.bp-color-swatch').forEach((swatch) => {
+      swatch.addEventListener('click', () => {
+        document.querySelectorAll('.bp-color-swatch').forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+      });
+    });
+
+    // AI suggestion buttons - little interaction
+    document.querySelectorAll('.ai-suggestion-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.ai-suggestion-btn').forEach(b => b.style.background = '');
+        this.style.background = 'rgba(91,94,247,0.15)';
+      });
+    });
+  </script>
+</body>
+</html>
