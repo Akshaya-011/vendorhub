@@ -53,23 +53,23 @@ app.get('/', (req, res) => {
 });
 
 // Apply rate limiting protectors universally to all endpoints
-app.use('/api', apiLimiter);
+app.use('/api/v1', apiLimiter);
 
 // Register resource routers
-app.use('/api/auth', authRoutes);
-app.use('/api/vendors', vendorRoutes);
-app.use('/api/websites', websiteRoutes);
-app.use('/api/builder', builderRoutes);
-app.use('/api/templates', templateRoutes);
-app.use('/api/ai', aiRoutes);
-app.use('/api/analytics', analyticsRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/marketing', marketingRoutes);
-app.use('/api/upload', uploadRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/notifications', notificationRoutes);
-app.use('/api/admin', adminRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/vendors', vendorRoutes);
+app.use('/api/v1/websites', websiteRoutes);
+app.use('/api/v1/builder', builderRoutes);
+app.use('/api/v1/templates', templateRoutes);
+app.use('/api/v1/ai', aiRoutes);
+app.use('/api/v1/analytics', analyticsRoutes);
+app.use('/api/v1/payments', paymentRoutes);
+app.use('/api/v1/products', productRoutes);
+app.use('/api/v1/marketing', marketingRoutes);
+app.use('/api/v1/upload', uploadRoutes);
+app.use('/api/v1/orders', orderRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 // Fallback error-handling middleware matching standard JSON outputs
 app.use(errorHandler);

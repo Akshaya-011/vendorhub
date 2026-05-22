@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Store, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
 
 export default function Footer() {
@@ -10,12 +11,12 @@ export default function Footer() {
           
           {/* Brand */}
           <div className="md:col-span-4 lg:col-span-5">
-            <div className="flex items-center space-x-2 mb-6">
+            <Link to="/" className="flex items-center space-x-2 mb-6">
               <div className="bg-primary-600 p-2 rounded-xl">
                 <Store className="h-6 w-6 text-white" />
               </div>
               <span className="text-2xl font-display font-bold text-gray-900">VendorHub</span>
-            </div>
+            </Link>
             <p className="text-gray-500 mb-8 max-w-sm">
               The AI-powered website builder platform that turns your ideas into reality in seconds. Built for the modern entrepreneur.
             </p>
@@ -31,10 +32,10 @@ export default function Footer() {
           <div className="md:col-span-2 lg:col-span-2">
             <h4 className="font-bold text-gray-900 mb-6">Product</h4>
             <ul className="space-y-4 text-gray-500">
-              <li><a href="#" className="hover:text-primary-600 transition-colors">Features</a></li>
-              <li><a href="#" className="hover:text-primary-600 transition-colors">Templates</a></li>
-              <li><a href="#" className="hover:text-primary-600 transition-colors">Integrations</a></li>
-              <li><a href="#" className="hover:text-primary-600 transition-colors">Pricing</a></li>
+              <li><Link to="/#features" className="hover:text-primary-600 transition-colors">Features</Link></li>
+              <li><Link to="/templates" className="hover:text-primary-600 transition-colors">Templates</Link></li>
+              <li><Link to="/#integrations" className="hover:text-primary-600 transition-colors">Integrations</Link></li>
+              <li><Link to="/pricing" className="hover:text-primary-600 transition-colors">Pricing</Link></li>
               <li><a href="#" className="hover:text-primary-600 transition-colors">Changelog</a></li>
             </ul>
           </div>
