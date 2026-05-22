@@ -21,25 +21,25 @@ export default function HealthcareTemplate({ vendorData = {}, products = [], the
   const { addToCart } = useCart();
   const [booked, setBooked] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All');
-  
+
   const categories = ['All', 'Fever', 'Cold & Cough', 'Diabetes', 'Vitamins'];
 
-  const filteredProducts = activeCategory === 'All' 
-    ? products 
+  const filteredProducts = activeCategory === 'All'
+    ? products
     : products.filter(p => p.category?.toLowerCase() === activeCategory.toLowerCase());
 
   return (
-    <div 
-      className="min-h-screen selection:bg-sky-600 selection:text-white" 
-      style={{ 
-        backgroundColor: customTheme.backgroundColor, 
+    <div
+      className="min-h-screen selection:bg-sky-600 selection:text-white"
+      style={{
+        backgroundColor: customTheme.backgroundColor,
         fontFamily: customTheme.fontFamily,
         color: customTheme.textColor
       }}
     >
       <Navbar vendorData={vendorData} themeConfig={customTheme} />
-      
-      <Hero 
+
+      <Hero
         vendorData={{
           ...vendorData,
           businessName: vendorData.businessName || 'Elite Clinical Care',
@@ -94,12 +94,11 @@ export default function HealthcareTemplate({ vendorData = {}, products = [], the
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 ${
-                activeCategory === cat 
-                  ? 'text-white shadow-md' 
+              className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 ${activeCategory === cat
+                  ? 'text-white shadow-md'
                   : 'bg-white border hover:bg-sky-50'
-              }`}
-              style={{ 
+                }`}
+              style={{
                 backgroundColor: activeCategory === cat ? customTheme.primaryColor : 'transparent',
                 borderColor: `${customTheme.textColor}20`,
                 color: activeCategory === cat ? '#FFF' : customTheme.textColor
@@ -111,9 +110,9 @@ export default function HealthcareTemplate({ vendorData = {}, products = [], the
         </div>
       </div>
 
-      <ProductGrid 
-        products={filteredProducts} 
-        themeConfig={customTheme} 
+      <ProductGrid
+        products={filteredProducts}
+        themeConfig={customTheme}
         onAddToCart={(p) => addToCart(p, 1)}
       />
 
