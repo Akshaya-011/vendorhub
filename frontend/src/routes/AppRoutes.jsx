@@ -24,10 +24,10 @@ const AIAssistant = React.lazy(() => import('../pages/AIAssistant'));
 const Admin = React.lazy(() => import('../pages/Admin'));
 const VendorStore = React.lazy(() => import('../pages/VendorStore'));
 const NotFound = React.lazy(() => import('../pages/NotFound'));
+const Products = React.lazy(() => import('../pages/Products'));
 
 // Placeholder components for routes that don't have full pages yet
 const Settings = () => <div className="p-8"><h1 className="text-2xl font-bold">Settings</h1><p>Settings page content goes here.</p></div>;
-const Products = () => <div className="p-8"><h1 className="text-2xl font-bold">Products</h1><p>Products management content goes here.</p></div>;
 const Orders = () => <div className="p-8"><h1 className="text-2xl font-bold">Orders</h1><p>Orders management content goes here.</p></div>;
 
 export default function AppRoutes() {

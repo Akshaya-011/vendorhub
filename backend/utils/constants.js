@@ -15,13 +15,13 @@ module.exports = {
   TEMPLATE_CATEGORIES: [
     'bakery',
     'beauty',
-    'electronics',
+    'education',
     'fashion',
     'grocery',
-    'restaurant',
-    'portfolio',
-    'corporate',
-    'fitness'
+    'healthcare',
+    'paints',
+    'pickles',
+    'restaurant'
   ],
 
   PAYMENT_STATUS: {

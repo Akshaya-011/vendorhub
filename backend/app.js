@@ -58,6 +58,10 @@ app.use('/api/v1', apiLimiter);
 // Register resource routers
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/vendors', vendorRoutes);
+
+// Compatibility route matching exact user request specifications
+app.post('/api/vendors/select-template', require('./controllers/vendorController').selectTemplate);
+
 app.use('/api/v1/websites', websiteRoutes);
 app.use('/api/v1/builder', builderRoutes);
 app.use('/api/v1/templates', templateRoutes);

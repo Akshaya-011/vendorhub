@@ -24,7 +24,18 @@ export default function Login() {
     setIsLoading(false);
 
     if (result.success) {
-      navigate(from, { replace: true });
+      // Determine if we should route to admin based on the newly logged-in user context
+      const userStr = localStorage.getItem('vendorhub_user');
+      let isAdmin = false;
+      if (userStr) {
+        try {
+          const parsed = JSON.parse(userStr);
+          isAdmin = parsed.role === 'admin';
+        } catch(e) {}
+      }
+      
+      const destination = location.state?.from?.pathname || (isAdmin ? '/admin' : '/dashboard');
+      navigate(destination, { replace: true });
     } else {
       setError(result.error);
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Sparkles, PlayCircle, CheckCircle2, Type, Image as ImageIcon, Pointer, Layout, Square, Video, FileText, MessageSquare, Plus, ArrowRight } from 'lucide-react';
 
 export default function HeroSection() {
@@ -31,14 +32,14 @@ export default function HeroSection() {
             </p>
             
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-10">
-              <button className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-[0_8px_30px_rgb(91,94,247,0.3)] hover:shadow-[0_8px_30px_rgb(91,94,247,0.5)] transform hover:-translate-y-1 flex items-center justify-center space-x-2">
+              <Link to="/register" className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-[0_8px_30px_rgb(91,94,247,0.3)] hover:shadow-[0_8px_30px_rgb(91,94,247,0.5)] transform hover:-translate-y-1 flex items-center justify-center space-x-2">
                 <span>Start Building for Free</span>
                 <ArrowRight className="h-5 w-5" />
-              </button>
-              <button className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-sm flex items-center justify-center space-x-2">
+              </Link>
+              <a href="#features" className="bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-sm flex items-center justify-center space-x-2">
                 <PlayCircle className="h-5 w-5 text-gray-600" />
                 <span>Watch how it works</span>
-              </button>
+              </a>
             </div>
             
             <div className="flex flex-wrap gap-y-3 gap-x-6 text-sm text-gray-600 font-medium">

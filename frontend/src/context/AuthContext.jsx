@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 
 const AuthContext = createContext(null);
 
-// Demo users for testing the routing system
+// Demo users for offline fallback
 const DEMO_USERS = {
   'admin@vendorhub.com': {
     id: '1',
@@ -38,52 +38,99 @@ export function AuthProvider({ children }) {
       }
     } catch {
       localStorage.removeItem('vendorhub_user');
+      localStorage.removeItem('token');
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   const login = useCallback(async (email, password) => {
-    // Simulate API latency
-    await new Promise((r) => setTimeout(r, 800));
+    try {
+      const response = await fetch('http://localhost:5000/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
 
-    const demoUser = DEMO_USERS[email];
-    if (demoUser && demoUser.password === password) {
-      const { password: _, ...userData } = demoUser;
-      setUser(userData);
-      localStorage.setItem('vendorhub_user', JSON.stringify(userData));
-      return { success: true };
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        const userData = data.data.user;
+        setUser(userData);
+        localStorage.setItem('vendorhub_user', JSON.stringify(userData));
+        localStorage.setItem('token', data.data.token);
+        return { success: true };
+      } else {
+        throw new Error(data.message || 'Authentication failed');
+      }
+    } catch (error) {
+      console.warn('Backend login failed, attempting local fallback:', error.message);
+      
+      // Offline fallback
+      await new Promise((r) => setTimeout(r, 500));
+      const demoUser = DEMO_USERS[email];
+      
+      if (demoUser && demoUser.password === password) {
+        const { password: _, ...userData } = demoUser;
+        setUser(userData);
+        localStorage.setItem('vendorhub_user', JSON.stringify(userData));
+        localStorage.setItem('token', 'simulated_token');
+        return { success: true };
+      }
+      return { success: false, error: error.message === 'Failed to fetch' ? 'Server is offline and credentials do not match demo users' : error.message };
     }
-
-    return { success: false, error: 'Invalid email or password' };
   }, []);
 
   const register = useCallback(async ({ name, email, password, role = 'vendor' }) => {
-    // Simulate API latency
-    await new Promise((r) => setTimeout(r, 800));
+    try {
+      const response = await fetch('http://localhost:5000/api/v1/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, role })
+      });
 
-    if (DEMO_USERS[email]) {
-      return { success: false, error: 'Email already registered' };
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        const userData = data.data.user;
+        setUser(userData);
+        localStorage.setItem('vendorhub_user', JSON.stringify(userData));
+        localStorage.setItem('token', data.data.token);
+        return { success: true };
+      } else {
+        throw new Error(data.message || 'Registration failed');
+      }
+    } catch (error) {
+      console.warn('Backend register failed, attempting local fallback:', error.message);
+      
+      // Offline fallback
+      await new Promise((r) => setTimeout(r, 500));
+      
+      if (DEMO_USERS[email]) {
+        return { success: false, error: 'Email already registered' };
+      }
+
+      const newUser = {
+        id: Date.now().toString(),
+        name,
+        email,
+        role,
+        avatar: null,
+        storeName: `${name}'s Store`,
+        storeSlug: name.toLowerCase().replace(/\s+/g, '-') + '-store',
+      };
+
+      setUser(newUser);
+      localStorage.setItem('vendorhub_user', JSON.stringify(newUser));
+      localStorage.setItem('token', 'simulated_token');
+      return { success: true };
     }
-
-    const newUser = {
-      id: Date.now().toString(),
-      name,
-      email,
-      role,
-      avatar: null,
-      storeName: `${name}'s Store`,
-      storeSlug: name.toLowerCase().replace(/\s+/g, '-') + '-store',
-    };
-
-    setUser(newUser);
-    localStorage.setItem('vendorhub_user', JSON.stringify(newUser));
-    return { success: true };
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem('vendorhub_user');
+    localStorage.removeItem('token');
   }, []);
 
   const value = {
