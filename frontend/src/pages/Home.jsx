@@ -1,6 +1,5 @@
 import React from 'react';
 import HeroSection from '../components/landing/HeroSection';
-import TemplateMarketplace from '../components/landing/TemplateMarketplace';
 import FeaturesSection from '../components/landing/FeaturesSection';
 import AIAssistantShowcase from '../components/landing/AIAssistantShowcase';
 import MarketingTools from '../components/landing/MarketingTools';
@@ -12,7 +11,6 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <TemplateMarketplace />
       <FeaturesSection />
       <AIAssistantShowcase />
       <MarketingTools />
