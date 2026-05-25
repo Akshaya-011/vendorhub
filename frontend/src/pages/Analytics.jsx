@@ -8,18 +8,18 @@ import {
 const timeRanges = ['Last 7 days', 'Last 30 days', 'This Month', 'Last Year'];
 
 const stats = [
-  { label: 'Total Revenue', value: '$24,592', change: '+12.5%', trend: 'up', icon: TrendingUp },
+  { label: 'Total Revenue', value: '₹24,592', change: '+12.5%', trend: 'up', icon: TrendingUp },
   { label: 'Store Visitors', value: '18,204', change: '+5.2%', trend: 'up', icon: Users },
   { label: 'Conversion Rate', value: '3.84%', change: '-0.4%', trend: 'down', icon: MousePointerClick },
   { label: 'Total Orders', value: '942', change: '+8.1%', trend: 'up', icon: ShoppingCart },
 ];
 
 const topProducts = [
-  { name: 'Wireless Noise-Canceling Headphones', sales: 245, revenue: '$48,975', trend: '+12%' },
-  { name: 'Ergonomic Office Chair', sales: 182, revenue: '$36,218', trend: '+5%' },
-  { name: 'Mechanical Gaming Keyboard', sales: 154, revenue: '$19,980', trend: '-2%' },
-  { name: '4K Ultra HD Smart TV', sales: 98, revenue: '$58,702', trend: '+18%' },
-  { name: 'Smart Home Security Hub', sales: 76, revenue: '$9,112', trend: '+1%' },
+  { name: 'Wireless Noise-Canceling Headphones', sales: 245, revenue: '₹48,975', trend: '+12%' },
+  { name: 'Ergonomic Office Chair', sales: 182, revenue: '₹36,218', trend: '+5%' },
+  { name: 'Mechanical Gaming Keyboard', sales: 154, revenue: '₹19,980', trend: '-2%' },
+  { name: '4K Ultra HD Smart TV', sales: 98, revenue: '₹58,702', trend: '+18%' },
+  { name: 'Smart Home Security Hub', sales: 76, revenue: '₹9,112', trend: '+1%' },
 ];
 
 export default function Analytics() {

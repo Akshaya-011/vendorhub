@@ -50,7 +50,7 @@ export default function Pricing() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, i) => (
-            <div key={i} className={`${plan.bgColor} rounded-3xl p-8 border ${plan.border} ${plan.popular ? 'shadow-2xl transform md:-translate-y-4' : 'shadow-sm'} relative flex flex-col`}>
+            <div key={i} className={`₹{plan.bgColor} rounded-3xl p-8 border ₹{plan.border} ₹{plan.popular ? 'shadow-2xl transform md:-translate-y-4' : 'shadow-sm'} relative flex flex-col`}>
               
               {plan.popular && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-primary-500 to-secondary text-white text-sm font-bold px-4 py-1 rounded-full">
@@ -58,15 +58,15 @@ export default function Pricing() {
                 </div>
               )}
 
-              <h3 className={`text-2xl font-bold mb-2 ${plan.popular ? 'text-white' : 'text-gray-900'}`}>{plan.name}</h3>
-              <p className={`text-sm mb-6 ${plan.popular ? 'text-gray-400' : 'text-gray-500'}`}>{plan.description}</p>
+              <h3 className={`text-2xl font-bold mb-2 ₹{plan.popular ? 'text-white' : 'text-gray-900'}`}>{plan.name}</h3>
+              <p className={`text-sm mb-6 ₹{plan.popular ? 'text-gray-400' : 'text-gray-500'}`}>{plan.description}</p>
               
               <div className="mb-8">
-                <span className={`text-5xl font-display font-extrabold ${plan.popular ? 'text-white' : 'text-gray-900'}`}>${plan.price}</span>
-                <span className={`text-lg ${plan.popular ? 'text-gray-400' : 'text-gray-500'}`}>/mo</span>
+                <span className={`text-5xl font-display font-extrabold ₹{plan.popular ? 'text-white' : 'text-gray-900'}`}>₹{plan.price}</span>
+                <span className={`text-lg ₹{plan.popular ? 'text-gray-400' : 'text-gray-500'}`}>/mo</span>
               </div>
 
-              <button className={`w-full py-4 rounded-xl font-bold text-lg mb-8 transition-transform transform hover:-translate-y-1 ${
+              <button className={`w-full py-4 rounded-xl font-bold text-lg mb-8 transition-transform transform hover:-translate-y-1 ₹{
                 plan.popular 
                   ? 'bg-gradient-to-r from-primary-500 to-secondary text-white shadow-lg' 
                   : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -77,8 +77,8 @@ export default function Pricing() {
               <div className="space-y-4 mt-auto">
                 {plan.features.map((feature, j) => (
                   <div key={j} className="flex items-center space-x-3">
-                    <CheckCircle2 className={`h-5 w-5 ${plan.popular ? 'text-primary-400' : 'text-primary-600'}`} />
-                    <span className={`${plan.popular ? 'text-gray-300' : 'text-gray-700'}`}>{feature}</span>
+                    <CheckCircle2 className={`h-5 w-5 ₹{plan.popular ? 'text-primary-400' : 'text-primary-600'}`} />
+                    <span className={`₹{plan.popular ? 'text-gray-300' : 'text-gray-700'}`}>{feature}</span>
                   </div>
                 ))}
               </div>

@@ -25,6 +25,7 @@ const Admin = React.lazy(() => import('../pages/Admin'));
 const VendorStore = React.lazy(() => import('../pages/VendorStore'));
 const NotFound = React.lazy(() => import('../pages/NotFound'));
 const Products = React.lazy(() => import('../pages/Products'));
+const Calendar = React.lazy(() => import('../pages/Calendar'));
 
 // Placeholder components for routes that don't have full pages yet
 const Settings = () => <div className="p-8"><h1 className="text-2xl font-bold">Settings</h1><p>Settings page content goes here.</p></div>;
@@ -62,6 +63,7 @@ export default function AppRoutes() {
             <Route path="/products" element={<Products />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/calendar" element={<Calendar />} />
           </Route>
         </Route>
 
